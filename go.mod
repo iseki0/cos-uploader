@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/muesli/termenv v0.12.0
-	github.com/spf13/cobra v1.4.0
+	github.com/spf13/cobra v1.5.0
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.35
 )
 
