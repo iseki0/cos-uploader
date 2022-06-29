@@ -5,7 +5,7 @@ import (
 	"github.com/muesli/termenv"
 )
 
-var _info = termenv.String("INFO").Foreground(termenv.ANSIBrightWhite)
+var _info = termenv.String("INFO").Foreground(termenv.ANSIBrightCyan)
 var _warn = termenv.String("WARN").Foreground(termenv.ANSIBrightYellow)
 var _error = termenv.String("ERROR").Foreground(termenv.ANSIBrightRed)
 
