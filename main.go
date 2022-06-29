@@ -16,15 +16,21 @@ var ErrBadServiceUrl = errors.New("COS_SERVICE_URL invalid")
 
 var bucketFileName string
 var localFileName string
+var showVersion bool
 
 func main() {
 	c := &cobra.Command{
-		RunE:               rootRunE,
-		FParseErrWhitelist: cobra.FParseErrWhitelist{},
-		CompletionOptions:  cobra.CompletionOptions{},
-		SilenceUsage:       true,
+		RunE:             rootRunE,
+		SilenceUsage:     true,
+		TraverseChildren: true,
+		PreRun: func(cmd *cobra.Command, args []string) {
+			if showVersion {
+				fmt.Println("v1.0.0")
+				os.Exit(0)
+			}
+		},
 	}
-
+	c.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "display version then exit")
 	c.Flags().StringVar(&bucketFileName, "remote", "", "file path in bucket")
 	must(c.MarkFlagRequired("remote"))
 	c.Flags().StringVar(&localFileName, "local", "", "local file")
