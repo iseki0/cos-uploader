@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: cd build && docker build . --file Dockerfile --tag iseki0/cos-uploader:$GITHUB_REF_NAME
+        run: cd build && docker build . --file Dockerfile --tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
 
       - name: Docker login
         run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
       - name: Docker push
-        run: docker push iseki0/cos-uploader:GITHUB_REF_NAME
+        run: docker push $DOCKERHUB_USERNAME/cos-uploader:GITHUB_REF_NAME
 
