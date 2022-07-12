@@ -5,7 +5,7 @@ COPY . .
 RUN go build -trimpath -ldflags '-extldflags "-static" -s -w' -o cos-uploader .
 
 FROM ubuntu
-COPY --from=builder cos-uploader /bin/
+COPY --from=builder /usr/src/app/cos-uploader /bin/
 RUN apt update && \
     apt install add zip curl -y --no-install-recommend && \
     apt clean && \
