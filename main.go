@@ -25,7 +25,7 @@ func main() {
 		TraverseChildren: true,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if showVersion {
-				fmt.Println("v1.1.1")
+				fmt.Println("v1.1.2")
 				os.Exit(0)
 			}
 		},
