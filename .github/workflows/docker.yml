@@ -9,7 +9,6 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v3
 
@@ -23,4 +22,5 @@ jobs:
         run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
       - name: Docker push
+        if: startsWith(github.ref, 'refs/tags/')
         run: docker push $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
