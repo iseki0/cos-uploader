@@ -12,9 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: aa
-        run: ls
-
       - name: Build the Docker image
         run: docker build --file build/Dockerfile --tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME .
 
