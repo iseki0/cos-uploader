@@ -68,7 +68,7 @@ func rootRunE(cmd *cobra.Command, args []string) error {
 		SecretID:  CosSecretId,
 		SecretKey: CosSecretKey,
 	}})
-	PrintInfo("Uploading...", localFileName, "->", bucketFileName)
+	PrintInfo("Uploading... ", localFileName, " -> ", bucketFileName)
 	resp, e := client.Object.PutFromFile(context.Background(), bucketFileName, localFileName, nil)
 	if e != nil {
 		PrintError("Upload fail", e.Error())
