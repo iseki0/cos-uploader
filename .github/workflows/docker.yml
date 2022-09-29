@@ -13,9 +13,14 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build the Docker image
-        run: docker build --file build/Dockerfile --tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME .
+        run: docker build --file build/Dockerfile --tag $DOCKERHUB_USERNAME/cos-uploader:a-tag .
+
+      - name: Tag image
+        if: startsWith(github.ref, 'refs/tags/')
+        run: docker tag a-tag $GITHUB_REF_NAME
 
       - name: Docker login
+        if: startsWith(github.ref, 'refs/tags/')
         run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
       - name: Docker push
