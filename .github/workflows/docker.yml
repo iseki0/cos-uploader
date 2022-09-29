@@ -4,6 +4,7 @@ on:
   release:
     types:
       - created
+      - edited
       - published
 jobs:
 
@@ -17,7 +18,7 @@ jobs:
       - name: Print
         run: |
           echo $GITHUB_REF_NAME
-          echo '{{ github.event }}'
+          echo '${{ github.event }}'
 
 #      - uses: dsaltares/fetch-gh-release-asset@master
 #        with:
