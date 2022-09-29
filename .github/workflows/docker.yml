@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   release:
     types:
-      - created
-      - edited
       - published
 jobs:
 
