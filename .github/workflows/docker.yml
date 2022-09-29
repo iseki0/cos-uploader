@@ -17,28 +17,24 @@ jobs:
 
       - name: Print
         run: |
-          echo $GITHUB_REF_NAME
-          echo '${{ github.event }}'
+          echo Github Ref name $GITHUB_REF_NAME
+          echo Release ID '${{ github.event.id }}'
 
-#      - uses: dsaltares/fetch-gh-release-asset@master
-#        with:
-#          repo: ${{ github.repository }}
-#          version: ${{ github.event.id }}
-#          file: 'cos-uploader-linux-amd64'
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Build the Docker image
-#        run: docker build --file build/Dockerfile --tag a-tag .
-#
-#      - name: Tag image
-#        run: docker tag a-tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
-#
-#      - name: Docker login
-#        if: ${{ !github.event.draft }}
-#        run: echo '{{ github.event }}'
-##        run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-#
-#      - name: Docker push
-#        if: ${{ !github.event.draft }}
-#        run: echo pub
-##        run: docker push $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: ${{ github.repository }}
+          version: ${{ github.event.id }}
+          file: 'cos-uploader-linux-amd64'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build the Docker image
+        run: docker build --file build/Dockerfile --tag a-tag .
+
+      - name: Tag image
+        run: docker tag a-tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
+
+      - name: Docker login
+        run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+
+      - name: Docker push
+        run: docker push $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
