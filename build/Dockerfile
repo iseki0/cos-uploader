@@ -1,12 +1,6 @@
-FROM golang AS builder
-
-WORKDIR /usr/src/app
-COPY . .
-RUN go build -trimpath -ldflags '-extldflags "-static" -s -w' -o cos-uploader .
-
 FROM ubuntu:focal
-COPY --from=builder /usr/src/app/cos-uploader /bin/
 RUN apt update && \
     apt install zip curl ca-certificates -y --no-install-recommends && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
+COPY cos-uploader /bin/
