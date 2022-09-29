@@ -1,7 +1,10 @@
 name: Docker Image CI
 
 on:
-  push:
+  release:
+    types:
+      - created
+      - published
 jobs:
 
   build:
@@ -10,19 +13,25 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: ${{ github.repository }}
+          version: ${{ github.event.id }}
+          file: 'cos-uploader-linux-amd64'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build --file build/Dockerfile --tag $DOCKERHUB_USERNAME/cos-uploader:a-tag .
+        run: docker build --file build/Dockerfile --tag a-tag .
 
       - name: Tag image
-        if: startsWith(github.ref, 'refs/tags/')
-        run: docker tag $DOCKERHUB_USERNAME/cos-uploader:a-tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
+        run: docker tag a-tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
 
       - name: Docker login
-        if: startsWith(github.ref, 'refs/tags/')
-        run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+        if: ${{ !github.event.draft }}
+        run: echo '{{ github.event }}'
+#        run: echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
       - name: Docker push
-        if: startsWith(github.ref, 'refs/tags/')
-        run: docker push $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
+        if: ${{ !github.event.draft }}
+        run: echo pub
+#        run: docker push $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
