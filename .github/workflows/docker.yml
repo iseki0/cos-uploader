@@ -17,7 +17,7 @@ jobs:
 
       - name: Tag image
         if: startsWith(github.ref, 'refs/tags/')
-        run: docker tag a-tag $GITHUB_REF_NAME
+        run: docker tag $DOCKERHUB_USERNAME/cos-uploader:a-tag $DOCKERHUB_USERNAME/cos-uploader:$GITHUB_REF_NAME
 
       - name: Docker login
         if: startsWith(github.ref, 'refs/tags/')
