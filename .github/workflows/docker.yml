@@ -13,17 +13,8 @@ jobs:
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
     steps:
 
-      - name: Print
-        run: |
-          echo Github Ref name $GITHUB_REF_NAME
-          echo Release ID '${{ github.event.id }}'
-
-      - uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          repo: ${{ github.repository }}
-          version: ${{ github.event.id }}
-          file: 'cos-uploader-linux-amd64'
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download release artifact
+        run: curl https://github.com/${{ github.repository }}/releases/download/$GITHUB_REF_NAME/cos-uploader-linux-amd64 -L --output cos-uploader
 
       - name: Build the Docker image
         run: docker build --file build/Dockerfile --tag a-tag .
