@@ -36,7 +36,7 @@ jobs:
       run: go test -v ./...
 
     - name: Build
-      run: go build -trimpath -ldflags '-extldflags "-static" -s -w -buildid=' -v -o out/cos-uploader-${{ matrix.goos }}-${{ matrix.goarch }} .
+      run: go build -trimpath -ldflags '-extldflags "-static" -s -w -buildid=' -v -o out/cos-uploader-${{ matrix.goos }}-${{ matrix.goarch }} ./cmd
 
     - name: Rename for Windows
       if: matrix.goos == 'windows'
