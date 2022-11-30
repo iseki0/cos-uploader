@@ -1,6 +1,6 @@
 module github.com/iseki0/cos-uploader
 
-go 1.18
+go 1.19
 
 require (
 	github.com/muesli/termenv v0.13.0
